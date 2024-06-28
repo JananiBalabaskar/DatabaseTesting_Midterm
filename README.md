@@ -194,7 +194,7 @@ docker-compose up -d –build
 ```
 docker exec -it postgres-with-pgadmin-master-db-1 psql -U postgres 
 ```
-__ This will allow you to log in to the Postgres__
+This will allow you to log in to the Postgres.
 
 ```
 postgres~#
@@ -367,6 +367,6 @@ CREATE TABLE Coupon (
 
  
 ## References
-Format used from [Markdown Live Preview](https://markdownlivepreview.com/).
-Idea for Sample Bookstore Database [Database Star](https://www.databasestar.com/sample-bookstore-database/).
+>Format used from [Markdown Live Preview](https://markdownlivepreview.com/).
+>Idea for Sample Bookstore Database [Database Star](https://www.databasestar.com/sample-bookstore-database/).
 
