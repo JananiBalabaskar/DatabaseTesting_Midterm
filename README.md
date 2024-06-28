@@ -67,8 +67,8 @@ Cart: To save the items added to the cart.
 |-----------------|----------------|--------------------------------------|
 | BookID          | SERIAL         | PRIMARY KEY                          |
 | Title           | VARCHAR(255)   |                                      |
-| AuthorID        | INTEGER        | REFERENCES Authors(AuthorID)         |
-| PublisherID     | INTEGER        | REFERENCES Publishers(PublisherID)   |
+| AuthorID        | INTEGER        | REFERENCES Authors (FOREIGN KEY)        |
+| PublisherID     | INTEGER        | REFERENCES Publishers (FOREIGN KEY)   |
 | PublishedDate   | DATE           |                                      |
 | Edition         | VARCHAR(50)    |                                      |
 | Language        | VARCHAR(50)    |                                      |
@@ -102,14 +102,14 @@ Cart: To save the items added to the cart.
 ### BookGenre
 | Attributes       | Type        | Constraints                          |
 |-----------------|-------------|--------------------------------------|
-| BookID          | INTEGER     | REFERENCES Books(BookID), PRIMARY KEY(BookID, GenreID) |
-| GenreID         | INTEGER     | REFERENCES Genre(GenreID), PRIMARY KEY(BookID, GenreID) |
+| BookID          | INTEGER     | REFERENCES Books (FOREIGN KEY)|
+| GenreID         | INTEGER     | REFERENCES Genre (FOREIGN KEY)|
 
 ### Purchase
 | Attributes       | Type           | Constraints     |
 |-----------------|----------------|-----------------|
 | PurchaseID      | SERIAL         | PRIMARY KEY     |
-| CustomerID      | INTEGER        | REFERENCES Customers(CustomerID) |
+| CustomerID      | INTEGER        | REFERENCES Customers (FOREIGN KEY) |
 | PurchaseDate    | DATE           |                 |
 | TotalAmount     | DECIMAL(10, 2) |                 |
 | PaymentMethodID | INTEGER        |                 |
@@ -120,8 +120,8 @@ Cart: To save the items added to the cart.
 | Attributes       | Type           | Constraints     |
 |-----------------|----------------|-----------------|
 | ReviewID        | SERIAL         | PRIMARY KEY     |
-| CustomerID      | INTEGER        | REFERENCES Customers(CustomerID) |
-| BookID          | INTEGER        | REFERENCES Books(BookID) |
+| CustomerID      | INTEGER        | REFERENCES Customers(FOREIGN KEY) |
+| BookID          | INTEGER        | REFERENCES Books (FOREIGN KEY)|
 | Rating          | DECIMAL(3, 2)  |                 |
 | Comment         | TEXT           |                 |
 | ReviewDate      | DATE           |                 |
@@ -130,27 +130,27 @@ Cart: To save the items added to the cart.
 | Attributes       | Type        | Constraints     |
 |-----------------|-------------|-----------------|
 | WishlistID      | SERIAL      | PRIMARY KEY     |
-| CustomerID      | INTEGER     | REFERENCES Customers(CustomerID) |
+| CustomerID      | INTEGER     | REFERENCES Customers (FOREIGN KEY) |
 | CreationDate    | DATE        |                 |
 
 ### WishlistBooks
 | Attributes       | Type        | Constraints                          |
 |-----------------|-------------|--------------------------------------|
-| BookID          | INTEGER     | REFERENCES Books(BookID), PRIMARY KEY(BookID, WishlistID) |
-| WishlistID      | INTEGER     | REFERENCES Wishlist(WishlistID), PRIMARY KEY(BookID, WishlistID) |
+| BookID          | INTEGER     | REFERENCES Books (FOREIGN KEY)|
+| WishlistID      | INTEGER     | REFERENCES Wishlist (FOREIGN KEY) |
 
 ### Payment
 | Attributes       | Type        | Constraints     |
 |-----------------|-------------|-----------------|
 | PaymentID       | SERIAL      | PRIMARY KEY     |
-| PurchaseID      | INTEGER     | REFERENCES Purchase(PurchaseID) |
+| PurchaseID      | INTEGER     | REFERENCES Purchase (FOREIGN KEY) |
 | CouponID        | INTEGER     |                 |
 
 ### PaymentMethod
 | Attributes       | Type        | Constraints     |
 |-----------------|-------------|-----------------|
 | PaymentMethodID | SERIAL      | PRIMARY KEY     |
-| CustomerID      | INTEGER     | REFERENCES Customers(CustomerID) |
+| CustomerID      | INTEGER     | REFERENCES Customers(FOREIGN KEY) |
 | CardNumber      | VARCHAR(20) |                 |
 | CardType        | VARCHAR(20) |                 |
 | ExpirationDate  | DATE        |                 |
@@ -160,7 +160,7 @@ Cart: To save the items added to the cart.
 | Attributes       | Type        | Constraints     |
 |-----------------|-------------|-----------------|
 | ShippingID      | SERIAL      | PRIMARY KEY     |
-| PurchaseID      | INTEGER     | REFERENCES Purchase(PurchaseID) |
+| PurchaseID      | INTEGER     | REFERENCES Purchase (FOREIGN KEY) |
 | ShippingAddress | VARCHAR(255)|                 |
 | ShippingDate    | DATE        |                 |
 | TrackingNumber  | VARCHAR(50) |                 |
@@ -176,7 +176,7 @@ Cart: To save the items added to the cart.
 | Attributes       | Type        | Constraints                          |
 |-----------------|-------------|--------------------------------------|
 | CartListID      | SERIAL      | PRIMARY KEY                          |
-| BookID          | INTEGER     | REFERENCES Books(BookID)             |
+| BookID          | INTEGER     | REFERENCES Books(FOREIGN KEY)             |
 | Quantity        | INTEGER     |                                      |
 
 ### Coupon
@@ -187,11 +187,11 @@ Cart: To save the items added to the cart.
 | Function        | VARCHAR(50) |                 |
 
 ## Steps to create database
-1. Open 'virtual box' and Run 'KALI'.
+1. Open `virtual box` and Run `KALI`.
 2. open terminal.
-3. Give command 'cd Downloads'.
-4. Give command 'cd postgres-with-pgadmin-master'
-5. Connect to 'docker'.
+3. Give command `cd Downloads`.
+4. Give command `cd postgres-with-pgadmin-master`.
+5. Connect to `docker`.
 
 
 ## To connect with docker 
