@@ -4,13 +4,13 @@
 
 ## Duties of the individual members
 
-Janani – Identifying tables for an online bookstore and SQL queries for creating a sample database with the tables and attributes 
+Janani – Identifying tables for an online bookstore and SQL queries for creating a sample database with the tables and attributes. 
 
-Adithya– Writing DDL/DML for one table with CRUD operations 
+Adithya– Writing DDL/DML for one table with CRUD operations.
 
-Jaspher – SQL queries for five requirements 
+Jaspher – SQL queries for five requirements. 
 
-Adithya, Jaspher, Janani- Creating a Typescript interface that will allow modification to a table 
+Adithya, Jaspher, Janani- Creating a Typescript interface that will allow modification to a table.
 
 ## Identification of tables, attributes, and attribute types for Online Bookstore Database Design 
 
@@ -185,6 +185,14 @@ Cart: To save the items added to the cart.
 | CouponID        | SERIAL      | PRIMARY KEY     |
 | ExpiryDate      | DATE        |                 |
 | Function        | VARCHAR(50) |                 |
+
+## Steps to create database
+1. Open 'virtual box' and Run 'KALI'.
+2. open terminal.
+3. Give command 'cd Downloads'.
+4. Give command 'cd postgres-with-pgadmin-master'
+5. Connect to 'docker'.
+
 
 ## To connect with docker 
 ```
