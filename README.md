@@ -368,5 +368,5 @@ CREATE TABLE Coupon (
  
 ## References
 >Format used from [Markdown Live Preview](https://markdownlivepreview.com/).
->Idea for Sample Bookstore Database [Database Star](https://www.databasestar.com/sample-bookstore-database/).
+>>Idea for Sample Bookstore Database [Database Star](https://www.databasestar.com/sample-bookstore-database/).
 
