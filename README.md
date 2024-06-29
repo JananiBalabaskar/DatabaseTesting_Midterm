@@ -1,6 +1,6 @@
 
 # Online Bookstore Database  
- Online bookstore, needs database management to support operations.
+ The online bookstore sells physical books, e-books, and audiobooks which need database management to support operations to  browse the catalog, make purchases, and leave reviews.
 
 ## Duties of the individual members
 
@@ -44,7 +44,9 @@ PaymentMethods: To save the customer payment method information.
 
 ShippingDetails: To save shipping details for orders. 
 
-Cart: To save the items added to the cart. 
+Cart: To save the items that were added to the cart. 
+
+Coupon: To store the coupon used while purchasing.
 
 ## Tables and Attributes 
 
@@ -202,7 +204,7 @@ docker-compose up -d –build
 ```
 docker exec -it postgres-with-pgadmin-master-db-1 psql -U postgres 
 ```
-This will allow you to log in to the Postgres.
+This will allow you to log in to the Postgres and look like the following once connected.
 
 ```
 postgres~#
@@ -215,95 +217,45 @@ CREATE DATABASE Online_Bookstore;
 ```
 \c online_bookstore;
 ```
-
+This will connect to the Database created and look like the following.
+```
+postgres=# \c online_bookstore;
+You are now connected to database "online_bookstore" as user "postgres".
+online_bookstore=# 
+```
   ## PostgreSQL Queries to Create Tables
   ### To create a table for authors
 
 ```
-CREATE TABLE Authors (
-    AuthorID SERIAL PRIMARY KEY,
-    FirstName VARCHAR(50),
-    LastName VARCHAR(50)
-);
+CREATE TABLE Authors (AuthorID SERIAL PRIMARY KEY, FirstName VARCHAR(50), LastName VARCHAR(50));
 ```
   ### To create a table for Publishers
   ```
-CREATE TABLE Publishers (
-    PublisherID SERIAL PRIMARY KEY,
-    PublisherName VARCHAR(100),
-    PhoneNumber VARCHAR(20)
-);
+CREATE TABLE Publishers (PublisherID SERIAL PRIMARY KEY, PublisherName VARCHAR(100), PhoneNumber VARCHAR(20));
 ```
  ### To create a table for Books
  ```
-CREATE TABLE Books (
-    BookID SERIAL PRIMARY KEY,
-    Title VARCHAR(255),
-    AuthorID INTEGER REFERENCES Authors(AuthorID),
-    PublisherID INTEGER REFERENCES Publishers(PublisherID),
-    PublishedDate DATE,
-    Edition VARCHAR(50),
-    Language VARCHAR(50),
-    Price DECIMAL(10, 2),
-    CopiesCount INTEGER,
-    TotalSold INTEGER,
-    ISBN VARCHAR(20),
-    Format VARCHAR(50),
-    FileURL VARCHAR(255)
-);
+CREATE TABLE Books (BookID SERIAL PRIMARY KEY, Title VARCHAR(255), AuthorID INTEGER REFERENCES Authors(AuthorID), PublisherID INTEGER REFERENCES Publishers(PublisherID), PublishedDate DATE, Edition VARCHAR(50), Language VARCHAR(50), Price DECIMAL(10, 2), CopiesCount INTEGER, TotalSold INTEGER, ISBN VARCHAR(20), Format VARCHAR(50), FileURL VARCHAR(255));
 ```
  ### To create a table for Customers
  ```
-CREATE TABLE Customers (
-    CustomerID SERIAL PRIMARY KEY,
-    FirstName VARCHAR(50),
-    LastName VARCHAR(50),
-    UserName VARCHAR(50),
-    Password VARCHAR(255),
-    Address VARCHAR(255),
-    Country VARCHAR(50),
-    PhoneNumber VARCHAR(20),
-    EmailId VARCHAR(100),
-    CartID INTEGER
-);
+CREATE TABLE Customers ( CustomerID SERIAL PRIMARY KEY, FirstName VARCHAR(50), LastName VARCHAR(50), UserName VARCHAR(50), Password VARCHAR(255), Address VARCHAR(255), Country VARCHAR(50), PhoneNumber VARCHAR(20), EmailId VARCHAR(100), CartID INTEGER);
  ```
  ### To create a table for Genre
 ```
-CREATE TABLE Genre (
-    GenreID SERIAL PRIMARY KEY,
-    GenreName VARCHAR(100)
-);
+CREATE TABLE Genre ( GenreID SERIAL PRIMARY KEY, GenreName VARCHAR(100));
  ```
  ### To create a table for BookGenre
   ```
-CREATE TABLE BookGenre (
-    BookID INTEGER REFERENCES Books(BookID),
-    GenreID INTEGER REFERENCES Genre(GenreID),
-    PRIMARY KEY (BookID, GenreID)
-);
+CREATE TABLE BookGenre ( BookID INTEGER REFERENCES Books(BookID), GenreID INTEGER REFERENCES Genre(GenreID), PRIMARY KEY (BookID, GenreID));
 ```
  ### To create a table for Purchase 
  ```
-CREATE TABLE Purchase (
-    PurchaseID SERIAL PRIMARY KEY,
-    CustomerID INTEGER REFERENCES Customers(CustomerID),
-    PurchaseDate DATE,
-    TotalAmount DECIMAL(10, 2),
-    PaymentMethodID INTEGER,
-    PaymentStatus VARCHAR(50),
-    ShippingID INTEGER
-);
+CREATE TABLE Purchase ( PurchaseID SERIAL PRIMARY KEY, CustomerID INTEGER REFERENCES Customers(CustomerID), PurchaseDate DATE, TotalAmount DECIMAL(10, 2), PaymentMethodID INTEGER, PaymentStatus VARCHAR(50), ShippingID INTEGER);
 ```
  ### To create a table for Reviews
  ```
-CREATE TABLE Reviews (
-    ReviewID SERIAL PRIMARY KEY,
-    CustomerID INTEGER REFERENCES Customers(CustomerID),
-    BookID INTEGER REFERENCES Books(BookID),
-    Rating DECIMAL(3, 2),
-    Comment TEXT,
-    ReviewDate DATE
-);
+CREATE TABLE Reviews (ReviewID SERIAL PRIMARY KEY, CustomerID INTEGER REFERENCES Customers(CustomerID), BookID INTEGER REFERENCES Books(BookID), Rating DECIMAL(3, 2), Comment TEXT, ReviewDate DATE);
 ```
 ### To create a table for Wishlist
  ```
@@ -315,72 +267,39 @@ CREATE TABLE Wishlist (
 ```
 ### To create a table for WishlistBooks
  ```
-CREATE TABLE WishlistBooks (
-    BookID INTEGER REFERENCES Books(BookID),
-    WishlistID INTEGER REFERENCES Wishlist(WishlistID),
-    PRIMARY KEY (BookID, WishlistID)
-);
+CREATE TABLE WishlistBooks (BookID INTEGER REFERENCES Books(BookID), WishlistID INTEGER REFERENCES Wishlist(WishlistID), PRIMARY KEY (BookID, WishlistID));
 
 ```
 ### To create a table for Payment
  ```
-CREATE TABLE Payment (
-    PaymentID SERIAL PRIMARY KEY,
-    PurchaseID INTEGER REFERENCES Purchase(PurchaseID),
-    CouponID INTEGER
-);
+CREATE TABLE Payment ( PaymentID SERIAL PRIMARY KEY, PurchaseID INTEGER REFERENCES Purchase(PurchaseID), CouponID INTEGER);
 
 ```
 ### To create a table for PaymentMethod
  ```
-CREATE TABLE PaymentMethod (
-    PaymentMethodID SERIAL PRIMARY KEY,
-    CustomerID INTEGER REFERENCES Customers(CustomerID),
-    CardNumber VARCHAR(20),
-    CardType VARCHAR(20),
-    ExpirationDate DATE,
-    BillingAddress VARCHAR(255)
-);
+CREATE TABLE PaymentMethod ( PaymentMethodID SERIAL PRIMARY KEY, CustomerID INTEGER REFERENCES Customers(CustomerID), CardNumber VARCHAR(20), CardType VARCHAR(20), ExpirationDate DATE  BillingAddress VARCHAR(255));
 
 ```
 ### To create a table for Shipping
  ```
-CREATE TABLE Shipping (
-    ShippingID SERIAL PRIMARY KEY,
-    PurchaseID INTEGER REFERENCES Purchase(PurchaseID),
-    ShippingAddress VARCHAR(255),
-    ShippingDate DATE,
-    TrackingNumber VARCHAR(50),
-    DeliveryDate DATE
-);
+CREATE TABLE Shipping ( ShippingID SERIAL PRIMARY KEY, PurchaseID INTEGER REFERENCES Purchase(PurchaseID), ShippingAddress VARCHAR(255), ShippingDate DATE, TrackingNumber VARCHAR(50), DeliveryDate DATE);
 
 ```
 ### To create a table for Cart
  ```
-CREATE TABLE Cart (
-    CartID SERIAL PRIMARY KEY,
-    CartListID INTEGER
-);
+CREATE TABLE Cart (CartID SERIAL PRIMARY KEY, CartListID INTEGER);
 
 ```
 ### To create a table for CartList
  ```
-CREATE TABLE CartList (
-    CartListID SERIAL PRIMARY KEY,
-    BookID INTEGER REFERENCES Books(BookID),
-    Quantity INTEGER
-);
+CREATE TABLE CartList (CartListID SERIAL PRIMARY KEY, BookID INTEGER REFERENCES Books(BookID), Quantity INTEGER);
 
 ```
 ### To create a table for Coupon
  ```
-CREATE TABLE Coupon (
-    CouponID SERIAL PRIMARY KEY,
-    ExpiryDate DATE,
-    Function VARCHAR(50)
-);
+CREATE TABLE Coupon (CouponID SERIAL PRIMARY KEY, ExpiryDate DATE, Function VARCHAR(50));
 ```
-### To view a tables in terminal
+### To view a tables in the terminal
 ```
 \dt
 
@@ -388,8 +307,7 @@ CREATE TABLE Coupon (
 ```
 ### To Insert values into Authors table
  ```
-INSERT INTO Authors (FirstName, LastName) 
-VALUES 
+INSERT INTO Authors (FirstName, LastName) VALUES 
 ('Jane', 'Austen'), 
 ('Albert', 'Camus'), 
 ('Franz', 'Kafka');
@@ -397,8 +315,7 @@ VALUES
 ```
 ### To Insert values into Publishers table
  ```
-INSERT INTO Publishers (PublisherName, PhoneNumber) 
-VALUES 
+INSERT INTO Publishers (PublisherName, PhoneNumber) VALUES 
 ('Seven Stories Press', '346-555-1234'), 
 ('Wiley', '765-555-5678'), 
 ('DAW Books', '657-555-9101');
@@ -406,10 +323,7 @@ VALUES
 ```
 ### To Insert values into Books table
  ```
-INSERT INTO Books (
-    Title, AuthorID, PublisherID, PublishedDate, Edition, Language, Price, CopiesCount, TotalSold, ISBN, Format, FileURL
-)
-VALUES 
+INSERT INTO Books (Title, AuthorID, PublisherID, PublishedDate, Edition, Language, Price, CopiesCount, TotalSold, ISBN, Format, FileURL) VALUES 
 ('Pride and Prejudice', 1, 1, '2023-01-28', 'First Edition', 'English', 29.99, 100, 50, '978-3-1765-6546-0', 'Hardcover', 'https://books.com/ PrideandPrejudice'),
 ('The Stranger',1,2,'2023-05-23', 'Second Edition', 'French', 39.99, 200, 100, '978-1-2345-7644-1', 'Paperback', 'https://books.com/ TheStranger'),
 ('The Trial', 2,3,'1967-03-01', 'First Edition', 'English', 49.99, 300, 150, '978-1-2345-7337-2', 'Ebook', 'https://books.com/ TheTrial'),
@@ -422,10 +336,7 @@ VALUES
 ```
 ### To Insert values into Customers table
  ```
-INSERT INTO Customers (
-    FirstName, LastName, UserName, Password, Address, Country, PhoneNumber, EmailId,CartID
-)
-VALUES 
+INSERT INTO Customers (FirstName, LastName, UserName, Password, Address, Country, PhoneNumber, EmailId,CartID) VALUES 
 ('Jared', 'Don', 'jareddon123', 'password123', '156 cake St, Cambridge, Canada', 'Canada', '657-765-1234', 'jareddon@gmail.com',1),
 ('Hailey', 'Smith', 'haileysmith456', 'password_hailey', '456 Oak St, Kitchener, Canada', 'Canada', '768-643-5678', 'haileysmith@gmail.com',2),
 ('Rachael', 'Gladdings', 'rachaelgladdings', 'passwordRachael', '789 Pine St, Waterloo, Canada', 'Canada', '759-565-9101', 'rachael@gmail.com',3);
@@ -433,8 +344,7 @@ VALUES
 ```
 ### To Insert values into Genre table
  ```
-INSERT INTO Genre (GenreName) 
-VALUES 
+INSERT INTO Genre (GenreName) VALUES 
 ('Fiction'), 
 ('Non-Fiction'), 
 ('Science Fiction');
@@ -442,8 +352,7 @@ VALUES
 ```
 ### To Insert values into Genre table
  ```
-INSERT INTO BookGenre (BookID, GenreID) 
-VALUES 
+INSERT INTO BookGenre (BookID, GenreID) VALUES 
 (1, 1), 
 (2, 2), 
 (3, 3),
@@ -456,10 +365,7 @@ VALUES
 ```
 ### To Insert values into Purchase table
  ```
-INSERT INTO Purchase (
-CustomerID,PurchaseDate, TotalAmount, PaymentMethodID, PaymentStatus, ShippingID
-)
-VALUES 
+INSERT INTO Purchase (CustomerID,PurchaseDate, TotalAmount, PaymentMethodID, PaymentStatus, ShippingID) VALUES 
 (1,'2023-04-01', 59.98, 1, 'Paid',1),
 (2,'2023-04-01', 79.98, 2, 'Paid',2),
 (3,'2023-06-01', 99.98, 3, 'Paid',3),
@@ -469,10 +375,7 @@ VALUES
 ```
 ### To Insert values into Reviews table
  ```
-INSERT INTO Reviews (
-    CustomerID, BookID, Rating, Comment, ReviewDate
-)
-VALUES 
+INSERT INTO Reviews ( CustomerID, BookID, Rating, Comment, ReviewDate) VALUES 
 (1, 1, 4.5, 'Great book!', '2023-04-10'),
 (2, 2, 4.0, 'Very informative.', '2022-05-15'),
 (3, 3, 5.0, 'Loved it!', '2023-05-20');
@@ -481,8 +384,7 @@ VALUES
 ```
 ### To Insert values into Wishlist table
  ```
-INSERT INTO Wishlist (CustomerID, CreationDate) 
-VALUES 
+INSERT INTO Wishlist (CustomerID, CreationDate) VALUES 
 (1, '2022-04-15'), 
 (2, '2022-04-15'), 
 (3, '2023-04-15');
@@ -490,8 +392,7 @@ VALUES
 ```
 ### To Insert values into WishlistBooks table
  ```
-INSERT INTO WishlistBooks (BookID, WishlistID) 
-VALUES 
+INSERT INTO WishlistBooks (BookID, WishlistID) VALUES 
 (1, 1), 
 (2, 2), 
 (3, 3);
@@ -499,8 +400,7 @@ VALUES
 ```
 ### To Insert values into Payment table
  ```
-INSERT INTO Payment (PurchaseID, CouponID) 
-VALUES 
+INSERT INTO Payment (PurchaseID, CouponID) VALUES 
 (1, 1), 
 (2, 2), 
 (3, 3);
@@ -508,10 +408,7 @@ VALUES
 ```
 ### To Insert values into Payment table
  ```
-INSERT INTO PaymentMethod (
-    CustomerID, CardNumber, CardType, ExpirationDate, BillingAddress
-)
-VALUES 
+INSERT INTO PaymentMethod (CustomerID, CardNumber, CardType, ExpirationDate, BillingAddress) VALUES 
 (1,'4111111111111111', 'Visa', '2025-01-01', '156 cake St, Cambridge, Canada'),
 (2, '4222222222222222', 'MasterCard', '2025-02-01', '456 Oak St, Kitchener, Canada'),
 (3, '4333333333333333', 'American Express', '2025-03-01', '789 Pine St, Waterloo, Canada');
@@ -519,10 +416,7 @@ VALUES
 ```
 ### To Insert values into Shipping table
  ```
-INSERT INTO Shipping (
-   PurchaseID, ShippingAddress, ShippingDate, TrackingNumber, DeliveryDate
-)
-VALUES 
+INSERT INTO Shipping (PurchaseID, ShippingAddress, ShippingDate, TrackingNumber, DeliveryDate) VALUES 
 (1, '156 cake St, Cambridge, Canada', '2023-04-01', 'TRACK123', '2023-04-05'),
 (2, '456 Oak St, Kitchener, Canada', '2023-04-01', 'TRACK456', '2023-04-05'),
 (3, '789 Pine St, Waterloo, Canada', '2023-06-01', 'TRACK789', '2023-06-05');
@@ -530,8 +424,7 @@ VALUES
 ```
 ### To Insert values into Cart table
  ```
-INSERT INTO Cart (CartID, CartListID) 
-VALUES 
+INSERT INTO Cart (CartID, CartListID) VALUES 
 (1, 1), 
 (2, 2), 
 (3, 3);
@@ -539,8 +432,7 @@ VALUES
 ```
 ### To Insert values into CartList table
  ```
-INSERT INTO CartList (BookID, Quantity) 
-VALUES 
+INSERT INTO CartList (BookID, Quantity) VALUES 
 (1, 2), 
 (2, 3), 
 (3, 1);
@@ -548,15 +440,14 @@ VALUES
 ```
 ### To Insert values into Cart table
  ```
-INSERT INTO Coupon (ExpiryDate, Function) 
-VALUES 
+INSERT INTO Coupon (ExpiryDate, Function) VALUES 
 ('2024-12-31', 'DISCOUNT10'), 
 ('2024-11-30', 'DISCOUNT20'), 
 ('2024-10-31', 'DISCOUNT30');
 
 ```
-### SQL Queries for the following requirements
-## To display authors who have published more than 2 books in the same genre within the last 2 years.
+## SQL Queries for the following requirements
+### To display authors who have published more than 2 books in the same genre within the last 2 years.
  ```
 SELECT 
     a.AuthorID, 
@@ -580,7 +471,7 @@ HAVING
     COUNT(b.BookID) > 2;
 
 ```
-## To display loyal customers who have spent more than X dollars in the last year.
+### To display loyal customers who have spent more than X dollars in the last year.
  ```
 SELECT 
     c.CustomerID, 
@@ -599,7 +490,7 @@ HAVING
     SUM(p.TotalAmount) > 60;
 
 ```
-## To display books that have better user ratings than average.
+### To display books that have better user ratings than average.
  ```
 SELECT 
     b.BookID, 
@@ -613,7 +504,7 @@ WHERE
     r.Rating > (SELECT AVG(Rating) FROM Reviews);
 
 ```
-## To display the most popular genre by sales.
+### To display the most popular genre by sales.
  ```
 SELECT 
     g.GenreName,
@@ -632,7 +523,7 @@ LIMIT 1;
 
 
 ```
-## To display the 10 most recent reviews posted by customers.
+### To display the 10 most recent reviews posted by customers.
  ```
 SELECT 
     r.ReviewID,
