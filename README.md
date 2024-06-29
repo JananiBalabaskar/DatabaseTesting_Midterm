@@ -206,9 +206,9 @@ docker exec -it postgres-with-pgadmin-master-db-1 psql -U postgres
 ```
 This will allow you to log in to the Postgres and look like the following once connected.
 
-```
+`
 postgres~#
-```
+`
 ## PostgreSQL Query to Create Database
 ```
 CREATE DATABASE Online_Bookstore;
@@ -218,11 +218,11 @@ CREATE DATABASE Online_Bookstore;
 \c online_bookstore;
 ```
 This will connect to the Database created and look like the following.
-```
+`
 postgres=# \c online_bookstore;
 You are now connected to database "online_bookstore" as user "postgres".
 online_bookstore=# 
-```
+`
   ## PostgreSQL Queries to Create Tables
   ### To create a table for authors
 
