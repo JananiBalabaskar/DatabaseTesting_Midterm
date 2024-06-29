@@ -1,0 +1,49 @@
+--- Table 1
+-- Create table for Authors--
+CREATE TABLE Authors (AuthorID SERIAL PRIMARY KEY, FirstName VARCHAR(50), LastName VARCHAR(50));
+-- Insert author details
+INSERT INTO Authors (FirstName, LastName) VALUES ('J.K.', 'Rowling');
+-- Insert another author data
+INSERT INTO Authors (FirstName, LastName) VALUES ('J.R.R', 'Tolkien');
+
+
+-- Table 2
+-- Create table for Publishers--
+CREATE TABLE Publishers (PublisherID SERIAL PRIMARY KEY, PublisherName VARCHAR(100), PhoneNumber VARCHAR(20
+
+-- Insert publisher data
+INSERT INTO Publishers (PublisherName, PhoneNumber) VALUES ('Bloomsbury', '0123456789');
+INSERT INTO Publishers (PublisherName, PhoneNumber) VALUES ('ABC_ltd', '6543209267');
+
+select * from Books;
+
+--Table 3 (DDL query)
+-- Create table for Books--
+CREATE TABLE Books (BookID SERIAL PRIMARY KEY, Title VARCHAR(255), AuthorID INTEGER REFERENCES Authors(AuthorID),
+   PublisherID INTEGER REFERENCES Publishers(PublisherID), PublishedDate DATE, Edition VARCHAR(50),Language VARCHAR(50),
+   Price DECIMAL(10, 2), CopiesCount INTEGER, TotalSold INTEGER, ISBN VARCHAR(20), Format VARCHAR(50), FileURL VARCHAR(255));
+
+-- Table 4 (DML queries)
+-- CRUD Operations)
+
+-- Insert a new book
+INSERT INTO Books (Title, AuthorID, PublisherID, PublishedDate, Edition, Language, Price, CopiesCount, TotalSold, ISBN, Format, FileURL)
+VALUES ('Harry Potter', 1, 1, '2000-10-17', 'First Edition', 'English', 20.54, 1000, 500, '123543789', 'Audio', 'https://www.hoopladigital.com/audiobook/harry-potter-and-the-sorcerers-stone-j-k-rowling/13280513');
+
+	
+INSERT INTO Books (Title, AuthorID, PublisherID, PublishedDate, Edition, Language, Price, CopiesCount, TotalSold, ISBN, Format, FileURL)
+VALUES ('The Hobbit', 2, 1, '1961-04-15', 'First Edition', 'English', 17.99, 1500, 1200, '9754768', 'Physical', NULL);
+
+
+-- Read all books
+SELECT * FROM Books;
+	
+
+-- Update a book
+UPDATE Books SET Price = 24.99
+WHERE BookID = 2;
+
+-- Delete a book
+DELETE FROM Books
+WHERE BookID = 4;
+
