@@ -1,0 +1,125 @@
+CREATE DATABASE online_bookstore;
+
+CREATE TABLE Authors (
+    AuthorID SERIAL PRIMARY KEY,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50)
+);
+
+CREATE TABLE Publishers (
+    PublisherID SERIAL PRIMARY KEY,
+    PublisherName VARCHAR(100),
+    PhoneNumber VARCHAR(20)
+);
+
+CREATE TABLE Books (
+    BookID SERIAL PRIMARY KEY,
+    Title VARCHAR(255),
+    AuthorID INTEGER REFERENCES Authors(AuthorID),
+    PublisherID INTEGER REFERENCES Publishers(PublisherID),
+    PublishedDate DATE,
+    Edition VARCHAR(50),
+    Language VARCHAR(50),
+    Price DECIMAL(10, 2),
+    CopiesCount INTEGER,
+    TotalSold INTEGER,
+    ISBN VARCHAR(20),
+    Format VARCHAR(50),
+    FileURL VARCHAR(255)
+);
+
+CREATE TABLE Customers (
+    CustomerID SERIAL PRIMARY KEY,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    UserName VARCHAR(50),
+    Password VARCHAR(255),
+    Address VARCHAR(255),
+    Country VARCHAR(50),
+    PhoneNumber VARCHAR(20),
+    EmailId VARCHAR(100),
+    CartID INTEGER
+);
+
+CREATE TABLE Genre (
+    GenreID SERIAL PRIMARY KEY,
+    GenreName VARCHAR(100)
+);
+
+CREATE TABLE BookGenre (
+    BookID INTEGER REFERENCES Books(BookID),
+    GenreID INTEGER REFERENCES Genre(GenreID),
+    PRIMARY KEY (BookID, GenreID)
+);
+
+CREATE TABLE Purchase (
+    PurchaseID SERIAL PRIMARY KEY,
+    CustomerID INTEGER REFERENCES Customers(CustomerID),
+    PurchaseDate DATE,
+    TotalAmount DECIMAL(10, 2),
+    PaymentMethodID INTEGER,
+    PaymentStatus VARCHAR(50),
+    ShippingID INTEGER
+);
+
+CREATE TABLE Reviews (
+    ReviewID SERIAL PRIMARY KEY,
+    CustomerID INTEGER REFERENCES Customers(CustomerID),
+    BookID INTEGER REFERENCES Books(BookID),
+    Rating DECIMAL(3, 2),
+    Comment TEXT,
+    ReviewDate DATE
+);
+
+CREATE TABLE Wishlist (
+    WishlistID SERIAL PRIMARY KEY,
+    CustomerID INTEGER REFERENCES Customers(CustomerID),
+    CreationDate DATE
+);
+
+CREATE TABLE WishlistBooks (
+    BookID INTEGER REFERENCES Books(BookID),
+    WishlistID INTEGER REFERENCES Wishlist(WishlistID),
+    PRIMARY KEY (BookID, WishlistID)
+);
+
+CREATE TABLE Payment (
+    PaymentID SERIAL PRIMARY KEY,
+    PurchaseID INTEGER REFERENCES Purchase(PurchaseID),
+    CouponID INTEGER
+);
+
+CREATE TABLE PaymentMethod (
+    PaymentMethodID SERIAL PRIMARY KEY,
+    CustomerID INTEGER REFERENCES Customers(CustomerID),
+    CardNumber VARCHAR(20),
+    CardType VARCHAR(20),
+    ExpirationDate DATE,
+    BillingAddress VARCHAR(255)
+);
+
+CREATE TABLE Shipping (
+    ShippingID SERIAL PRIMARY KEY,
+    PurchaseID INTEGER REFERENCES Purchase(PurchaseID),
+    ShippingAddress VARCHAR(255),
+    ShippingDate DATE,
+    TrackingNumber VARCHAR(50),
+    DeliveryDate DATE
+);
+
+CREATE TABLE Cart (
+    CartID SERIAL PRIMARY KEY,
+    CartListID INTEGER
+);
+
+CREATE TABLE CartList (
+    CartListID SERIAL PRIMARY KEY,
+    BookID INTEGER REFERENCES Books(BookID),
+    Quantity INTEGER
+);
+
+CREATE TABLE Coupon (
+    CouponID SERIAL PRIMARY KEY,
+    ExpiryDate DATE,
+    Function VARCHAR(50)
+);
