@@ -446,6 +446,27 @@ INSERT INTO Coupon (ExpiryDate, Function) VALUES
 ('2024-10-31', 'DISCOUNT30');
 
 ```
+## SQL queries for DDL and DML operations in Books table
+### DDL Query
+```
+CREATE TABLE Books (BookID SERIAL PRIMARY KEY, Title VARCHAR(255), AuthorID INTEGER REFERENCES Authors(AuthorID),
+   PublisherID INTEGER REFERENCES Publishers(PublisherID), PublishedDate DATE, Edition VARCHAR(50),Language VARCHAR(50),
+   Price DECIMAL(10, 2), CopiesCount INTEGER, TotalSold INTEGER, ISBN VARCHAR(20), Format VARCHAR(50), FileURL VARCHAR(255));
+```
+### DML Queries
+Insert a new book
+```
+
+
+INSERT INTO Books (Title, AuthorID, PublisherID, PublishedDate, Edition, Language, Price, CopiesCount, TotalSold, ISBN, Format, FileURL)
+VALUES ('Harry Potter', 1, 1, '2000-10-17', 'First Edition', 'English', 20.54, 1000, 500, '123543789', 'Audio', 'https://www.hoopladigital.com/audiobook/harry-potter-and-the-sorcerers-stone-j-k-rowling/13280513');
+
+	
+INSERT INTO Books (Title, AuthorID, PublisherID, PublishedDate, Edition, Language, Price, CopiesCount, TotalSold, ISBN, Format, FileURL)
+VALUES ('The Hobbit', 2, 1, '1961-04-15', 'First Edition', 'English', 17.99, 1500, 1200, '9754768', 'Physical', NULL);
+
+```
+
 ## SQL Queries for the following requirements
 ### To display authors who have published more than 2 books in the same genre within the last 2 years.
  ```
