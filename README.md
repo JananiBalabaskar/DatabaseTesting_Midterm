@@ -207,6 +207,14 @@ This will allow you to log in to the Postgres.
 ```
 postgres~#
 ```
+## PostgreSQL Query to Create Database
+```
+CREATE DATABASE Online_Bookstore;
+```
+## To connect with the database created
+```
+\c online_bookstore;
+```
 
   ## PostgreSQL Queries to Create Tables
   ### To create a table for authors
@@ -372,6 +380,12 @@ CREATE TABLE Coupon (
     Function VARCHAR(50)
 );
 ```
+### To view a tables in terminal
+```
+\dt
+```
+
+
 
  
 ## References
