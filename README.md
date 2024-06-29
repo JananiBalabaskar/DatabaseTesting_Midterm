@@ -218,11 +218,11 @@ CREATE DATABASE Online_Bookstore;
 \c online_bookstore;
 ```
 This will connect to the Database created and look like the following.
-`
-postgres=# \c online_bookstore;
+```
+postgres=# \c online_bookstore;'
 You are now connected to database "online_bookstore" as user "postgres".
 online_bookstore=# 
-`
+```
   ## PostgreSQL Queries to Create Tables
   ### To create a table for authors
 
