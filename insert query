@@ -1,0 +1,153 @@
+INSERT INTO Authors (FirstName, LastName) 
+VALUES 
+('Jane', 'Austen'), 
+('Albert', 'Camus'), 
+('Franz', 'Kafka');
+
+
+INSERT INTO Publishers (PublisherName, PhoneNumber) 
+VALUES 
+('Seven Stories Press', '346-555-1234'), 
+('Wiley', '765-555-5678'), 
+('DAW Books', '657-555-9101');
+
+
+INSERT INTO Books (
+    Title, AuthorID, PublisherID, PublishedDate, Edition, Language, Price, CopiesCount, TotalSold, ISBN, Format, FileURL
+)
+VALUES 
+('Pride and Prejudice', 1, 1, '2023-01-28', 'First Edition', 'English', 29.99, 100, 50, '978-3-1765-6546-0', 'Hardcover', 'https://books.com/ PrideandPrejudice'),
+('The Stranger',1,2,'2023-05-23', 'Second Edition', 'French', 39.99, 200, 100, '978-1-2345-7644-1', 'Paperback', 'https://books.com/ TheStranger'),
+('The Trial', 2,3,'1967-03-01', 'First Edition', 'English', 49.99, 300, 150, '978-1-2345-7337-2', 'Ebook', 'https://books.com/ TheTrial'),
+('The Cat', 3,3,'2000-05-11', 'First Edition', 'English', 34.00, 400, 250, '456-1-6547-3356-2', 'Hardcover', 'https://books.com/ TheCat'),
+('Justice', 1, 1, '2023-01-28', 'First Edition', 'English', 49.99, 100, 50, '975-3-1775-6554-0', 'Hardcover', 'https://books.com/Justice'),
+('Jake', 1, 1, '2023-05-28', 'First Edition', 'English', 49.99, 100, 50, '966-3-1775-6554-0', 'Hardcover', 'https://books.com/Jake'),
+('Sir', 1, 1, '2023-07-20', 'First Edition', 'English', 49.99, 100, 50, '967-3-1775-6654-0', 'Hardcover', 'https://books.com/Sir'),
+('Fast', 1, 1, '2023-04-28', 'First Edition', 'English', 29.99, 100, 50, '978-3-1735-6576-0', 'Hardcover', 'https://books.com/Fast');
+
+
+
+INSERT INTO Customers (
+    FirstName, LastName, UserName, Password, Address, Country, PhoneNumber, EmailId,CartID
+)
+VALUES 
+('Jared', 'Don', 'jareddon123', 'password123', '156 cake St, Cambridge, Canada', 'Canada', '657-765-1234', 'jareddon@gmail.com',1),
+('Hailey', 'Smith', 'haileysmith456', 'password_hailey', '456 Oak St, Kitchener, Canada', 'Canada', '768-643-5678', 'haileysmith@gmail.com',2),
+('Rachael', 'Gladdings', 'rachaelgladdings', 'passwordRachael', '789 Pine St, Waterloo, Canada', 'Canada', '759-565-9101', 'rachael@gmail.com',3);
+
+
+INSERT INTO Genre (GenreName) 
+VALUES 
+('Fiction'), 
+('Non-Fiction'), 
+('Science Fiction');
+
+
+INSERT INTO BookGenre (BookID, GenreID) 
+VALUES 
+(1, 1), 
+(2, 2), 
+(3, 3),
+(4, 1), 
+(5, 2), 
+(6, 1),
+(7,3),
+(8,1);
+
+INSERT INTO Purchase (
+CustomerID,PurchaseDate, TotalAmount, PaymentMethodID, PaymentStatus, ShippingID
+)
+VALUES 
+(1,'2023-04-01', 59.98, 1, 'Paid',1),
+(2,'2023-04-01', 79.98, 2, 'Paid',2),
+(3,'2023-06-01', 99.98, 3, 'Paid',3),
+(1,'2023-09-05', 509.98, 4, 'Paid',4),
+(3,'2023-02-20', 709.98, 5, 'Paid',5);
+
+
+
+INSERT INTO Reviews (
+    CustomerID, BookID, Rating, Comment, ReviewDate
+)
+VALUES 
+(1, 1, 4.5, 'Great book!', '2023-04-10'),
+(2, 2, 4.0, 'Very informative.', '2022-05-15'),
+(3, 3, 5.0, 'Loved it!', '2023-05-20');
+
+
+INSERT INTO Wishlist (CustomerID, CreationDate) 
+VALUES 
+(1, '2022-04-15'), 
+(2, '2022-04-15'), 
+(3, '2023-04-15');
+
+
+INSERT INTO WishlistBooks (BookID, WishlistID) 
+VALUES 
+(1, 1), 
+(2, 2), 
+(3, 3);
+
+INSERT INTO Payment (PurchaseID, CouponID) 
+VALUES 
+(1, 1), 
+(2, 2), 
+(3, 3);
+
+INSERT INTO PaymentMethod (
+    CustomerID, CardNumber, CardType, ExpirationDate, BillingAddress
+)
+VALUES 
+(1,'4111111111111111', 'Visa', '2025-01-01', '156 cake St, Cambridge, Canada'),
+(2, '4222222222222222', 'MasterCard', '2025-02-01', '456 Oak St, Kitchener, Canada'),
+(3, '4333333333333333', 'American Express', '2025-03-01', '789 Pine St, Waterloo, Canada');
+
+
+INSERT INTO Shipping (
+   PurchaseID, ShippingAddress, ShippingDate, TrackingNumber, DeliveryDate
+)
+VALUES 
+(1, '156 cake St, Cambridge, Canada', '2023-04-01', 'TRACK123', '2023-04-05'),
+(2, '456 Oak St, Kitchener, Canada', '2023-04-01', 'TRACK456', '2023-04-05'),
+(3, '789 Pine St, Waterloo, Canada', '2023-06-01', 'TRACK789', '2023-06-05');
+
+
+INSERT INTO Cart (CartID, CartListID) 
+VALUES 
+(1, 1), 
+(2, 2), 
+(3, 3);
+
+INSERT INTO CartList (BookID, Quantity) 
+VALUES 
+(1, 2), 
+(2, 3), 
+(3, 1);
+
+INSERT INTO Coupon (ExpiryDate, Function) 
+VALUES 
+('2024-12-31', 'DISCOUNT10'), 
+('2024-11-30', 'DISCOUNT20'), 
+('2024-10-31', 'DISCOUNT30');
+
+
+SELECT * FROM Authors;
+SELECT * FROM Publishers;
+SELECT * FROM Books;
+SELECT * FROM Customers;
+SELECT * FROM Genre;
+SELECT * FROM BookGenre;
+SELECT * FROM Purchase;
+SELECT * FROM Reviews;
+SELECT * FROM Wishlist;
+SELECT * FROM WishlistBooks;
+SELECT * FROM Payment;
+SELECT * FROM PaymentMethod;
+SELECT * FROM Shipping;
+SELECT * FROM Cart;
+SELECT * FROM CartList;
+SELECT * FROM Coupon;
+
+
+
+

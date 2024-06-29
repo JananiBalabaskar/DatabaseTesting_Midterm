@@ -1,0 +1,85 @@
+SELECT 
+    a.AuthorID, 
+    a.FirstName, 
+    a.LastName, 
+    g.GenreName,
+    COUNT(b.BookID) AS BookCount
+FROM 
+    Authors a
+JOIN 
+    Books b ON a.AuthorID = b.AuthorID
+JOIN 
+    BookGenre bg ON b.BookID = bg.BookID
+JOIN 
+    Genre g ON bg.GenreID = g.GenreID
+WHERE 
+    b.PublishedDate >= NOW() - INTERVAL '2 years'
+GROUP BY 
+    a.AuthorID, a.FirstName, a.LastName, g.GenreName
+HAVING 
+    COUNT(b.BookID) > 2;
+
+
+SELECT 
+    c.CustomerID, 
+    c.FirstName, 
+    c.LastName, 
+    SUM(p.TotalAmount) AS TotalSpent
+FROM 
+    Customers c
+JOIN 
+    Purchase p ON c.CustomerID = p.CustomerID
+WHERE 
+    p.PurchaseDate >= NOW() - INTERVAL '1 year'
+GROUP BY 
+    c.CustomerID, c.FirstName, c.LastName
+HAVING 
+    SUM(p.TotalAmount) > 60;
+
+
+SELECT 
+    b.BookID, 
+    b.Title, 
+    r.Rating
+FROM 
+    Books b
+JOIN 
+    Reviews r ON b.BookID = r.BookID
+WHERE 
+    r.Rating > (SELECT AVG(Rating) FROM Reviews);
+
+SELECT 
+    g.GenreName,
+    SUM(b.CopiesCount) AS TotalCopiesSold
+FROM 
+    Books b
+JOIN 
+    BookGenre bg ON b.BookID = bg.BookID
+JOIN 
+    Genre g ON bg.GenreID = g.GenreID
+GROUP BY 
+    g.GenreName
+ORDER BY 
+    TotalCopiesSold DESC
+LIMIT 1;
+
+SELECT 
+    r.ReviewID,
+    r.CustomerID,
+    r.BookID,
+    r.Rating,
+    r.Comment,
+    r.ReviewDate,
+    c.FirstName,
+    c.LastName,
+    b.Title
+FROM 
+    Reviews r
+JOIN 
+    Customers c ON r.CustomerID = c.CustomerID
+JOIN 
+    Books b ON r.BookID = b.BookID
+ORDER BY 
+    r.ReviewDate DESC
+LIMIT 10;
+
