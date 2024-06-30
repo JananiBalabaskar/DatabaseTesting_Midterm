@@ -481,7 +481,7 @@ DELETE FROM Books
 WHERE BookID = 4;
 ```
 ## SQL Queries for the following requirements
-### To display authors who have published more than 2 books in the same genre within the last 2 years.
+### To display authors who have published more than 2 books in the same genre within the last 2 years
  ```
 SELECT 
     a.AuthorID, 
@@ -505,7 +505,7 @@ HAVING
     COUNT(b.BookID) > 2;
 
 ```
-### To display loyal customers who have spent more than X dollars in the last year.
+### To display loyal customers who have spent more than X dollars in the last year
  ```
 SELECT 
     c.CustomerID, 
@@ -524,7 +524,7 @@ HAVING
     SUM(p.TotalAmount) > 60;
 
 ```
-### To display books that have better user ratings than average.
+### To display books that have better user ratings than average
  ```
 SELECT 
     b.BookID, 
@@ -538,7 +538,7 @@ WHERE
     r.Rating > (SELECT AVG(Rating) FROM Reviews);
 
 ```
-### To display the most popular genre by sales.
+### To display the most popular genre by sales
  ```
 SELECT 
     g.GenreName,
@@ -557,7 +557,7 @@ LIMIT 1;
 
 
 ```
-### To display the 10 most recent reviews posted by customers.
+### To display the 10 most recent reviews posted by customers
  ```
 SELECT 
     r.ReviewID,
@@ -580,7 +580,97 @@ ORDER BY
 LIMIT 10;
 
 
- ``` 
+ ```
+
+## Typescript Interface 
+
+### To connect with database
+```
+import { Pool, QueryResult } from 'pg';
+
+
+const pool = new Pool({
+    user: 'postgres',
+    host: 'localhost',
+    database: 'online_bookstore',
+    password: '12345678',
+    port: 5432, 
+});
+```
+
+### Typescript Interface for author table
+```
+interface Author {
+    AuthorID?: number; 
+    FirstName: string;
+    LastName: string;
+}
+```
+### Function to add new author
+```
+async function createAuthor(author: Author): Promise<number | null> {
+    try {
+        const query = 'INSERT INTO authors (FirstName, LastName) VALUES ($1, $2) RETURNING AuthorID';
+        const values = [author.FirstName, author.LastName];
+        const result = await pool.query(query, values);
+        return result.rows[0].AuthorID;
+    } catch (error) {
+        console.error('Error creating author:', error);
+        return null;
+    }
+}
+
+exampleCRUDOperations().catch(err => console.error('Error in example:', err));
+```
+### Data for adding new author
+```
+async function exampleCRUDOperations() {
+   
+    const newAuthor: Author = {
+        FirstName: 'Rhonda',
+        LastName: 'bryne',
+    };
+    const createdAuthorId = await createAuthor(newAuthor);
+    console.log('New author created with ID:', createdAuthorId);
+}
+exampleCRUDOperations().catch(err => console.error('Error in example:', err));
+```
+```
+async function exampleCRUDOperations() {
+   
+    const newAuthor: Author = {
+        FirstName: 'Charles',
+        LastName: 'Dickens',
+    };
+    const createdAuthorId = await createAuthor(newAuthor);
+    console.log('New author created with ID:', createdAuthorId);
+}
+```
+
+### Function to delete an author
+```
+async function deleteAuthor(id: number): Promise<boolean> {
+    try {
+        const query = 'DELETE FROM authors WHERE AuthorID = $1';
+        const result = await pool.query(query, [id]);
+        return result.rowCount > 0;
+    } catch (error) {
+        console.error('Error deleting author:', error);
+        return false;
+    }
+}
+exampleCRUDOperations().catch(err => console.error('Error in example:', err));
+```
+### Data to delete an author
+```
+async function exampleCRUDOperations() {
+
+    const authorIdToDelete = 5; 
+    const isDeleted = await deleteAuthor(authorIdToDelete);
+    console.log('Author deleted successfully:', isDeleted);
+}
+exampleCRUDOperations().catch(err => console.error('Error in example:', err));
+```
 ## References
 >Format used from [Markdown Live Preview](https://markdownlivepreview.com/).
 >>Idea for Sample Bookstore Database [Database Star](https://www.databasestar.com/sample-bookstore-database/).
