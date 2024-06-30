@@ -466,7 +466,20 @@ INSERT INTO Books (Title, AuthorID, PublisherID, PublishedDate, Edition, Languag
 VALUES ('The Hobbit', 2, 1, '1961-04-15', 'First Edition', 'English', 17.99, 1500, 1200, '9754768', 'Physical', NULL);
 
 ```
-
+Read all Books
+```
+SELECT * FROM Books;
+```
+Update a Book data
+```
+UPDATE Books SET Price = 24.99
+WHERE BookID = 2;
+```
+Delete a book data
+```
+DELETE FROM Books
+WHERE BookID = 4;
+```
 ## SQL Queries for the following requirements
 ### To display authors who have published more than 2 books in the same genre within the last 2 years.
  ```
