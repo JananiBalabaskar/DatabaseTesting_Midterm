@@ -631,7 +631,7 @@ interface Author
 }
 ```
 
-### Function to add new author
+### Function to insert new author data
 ```
 async function createAuthor(author: Author): Promise<number | null>
 {
@@ -648,7 +648,7 @@ async function createAuthor(author: Author): Promise<number | null>
 
 InsertOperations().catch(err => console.error('Error Detected:', err));
 ```
-### Data for adding new author
+### Script for inserting new author data
 ```
 async function InsertOperations()
 {
@@ -675,7 +675,7 @@ async function InsertOperations()
 InsertOperations().catch(err => console.error('Error Detected:', err));
 ```
 
-### Function to delete an author
+### Function to delete an author 
 ```
 async function deleteAuthor(id: number): Promise<boolean>
 {
@@ -692,7 +692,7 @@ catch (error)
 }
 DeleteOperations().catch(err => console.error('Error Detected:', err));
 ```
-### Data to delete an author
+### Script to delete an author data
 ```
 async function DeleteOperations()
 {
