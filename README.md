@@ -674,8 +674,26 @@ async function InsertOperations()
 }
 InsertOperations().catch(err => console.error('Error Detected:', err));
 ```
+### Function to read all inserted data of author table
+```
+async function getAllAuthors(): Promise<Author[]> {
+    try {
+        const query = 'SELECT * FROM authors';
+        const result = await pool.query(query);
+        return result.rows;
+    } catch (error) {
+        console.error('Error dtected while reading authors:', error);
+        return [];
+    }
+}
+async function ReadOperations() {
+ const allAuthors = await getAllAuthors();
+    console.log('All authors:', allAuthors);
+}
+ReadOperations().catch(err => console.error('Error in example:', err));
+```
 
-### Function to delete an author 
+### Function to delete an author data
 ```
 async function deleteAuthor(id: number): Promise<boolean>
 {
