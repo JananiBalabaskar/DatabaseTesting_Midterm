@@ -594,14 +594,14 @@ LIMIT 10;
 
 ## 5. Typescript Interface 
 
-* Create a directory 'mkdir database'.
-* Create source directory in the folder 'mkdir src'.
-* Navigate to the directory ' cd database/src'.
-* Create a typescript file 'touch author.ts'.
-* To add script, open the file by 'vim author.ts' and then press 'i' and add the script.
-* Save the script by pressing 'Esc'button and enter ':wq'.
-* To compile the script 'tsc author.ts'.
-* To run the script 'node author.js'.
+* Create a directory `mkdir database`.
+* Create source directory in the folder `mkdir src`.
+* Navigate to the directory `cd database/src`.
+* Create a typescript file `touch author.ts`.
+* To add script, open the file by `vim author.ts` and then press `i` and add the script.
+* Save the script by pressing `Esc` button and enter `:wq`.
+* To compile the script `tsc author.ts`.
+* To run the script `node author.js`.
 * The output command will displayed.
 
 
