@@ -594,6 +594,17 @@ LIMIT 10;
 
 ## 5. Typescript Interface 
 
+* Create a directory 'mkdir database'.
+* Create source directory in the folder 'mkdir src'.
+* Navigate to the directory ' cd database/src'.
+* Create a typescript file 'touch author.ts'.
+* To add script, open the file by 'vim author.ts' and then press 'i' and add the script.
+* Save the script by pressing 'Esc'button and enter ':wq'.
+* To compile the script 'tsc author.ts'.
+* To run the script 'node author.js'.
+* The output command will displayed.
+
+
 ### To connect with database
 ```
 import { Pool, QueryResult } from 'pg';
@@ -630,7 +641,7 @@ async function createAuthor(author: Author): Promise<number | null>
         const result = await pool.query(query, values);
         return result.rows[0].AuthorID;
     } catch (error) {
-        console.error('Error creating author:', error);
+        console.error('Error detected when creating a new author:', error);
         return null;
     }
 }
@@ -646,7 +657,7 @@ async function InsertOperations()
         LastName: 'bryne',
     };
     const createdAuthorId = await createAuthor(newAuthor);
-    console.log('New author created with ID:', createdAuthorId);
+    console.log('Author added successfully:', createdAuthorId);
 }
 InsertOperations().catch(err => console.error('Error Detected:', err));
 ```
@@ -659,7 +670,7 @@ async function InsertOperations()
         LastName: 'Dickens',
 	};
     const createdAuthorId = await createAuthor(newAuthor);
-    console.log('New author created with ID:', createdAuthorId);
+    console.log('Author added successfully:', createdAuthorId);
 }
 InsertOperations().catch(err => console.error('Error Detected:', err));
 ```
@@ -675,7 +686,7 @@ async function deleteAuthor(id: number): Promise<boolean>
        }
 catch (error)
 	{
-        console.error('Error deleting author:', error);
+        console.error('Error detected when deleting author:', error);
         return false;
 	}
 }
