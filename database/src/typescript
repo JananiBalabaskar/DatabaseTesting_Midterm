@@ -1,1 +1,67 @@
+import { Pool, QueryResult } from 'pg';
+
+
+const pool = new Pool(
+{
+    user: 'postgres',
+    host: 'localhost',
+    database: 'online_bookstore',
+    password: '12345678',
+    port: 5432, 
+}
+);
+interface Author
+{
+    AuthorID?: number; 
+    FirstName: string;
+    LastName: string;
+}
+
+/* async function createAuthor(author: Author): Promise<number | null>
+{
+    try {
+        const query = 'INSERT INTO authors (FirstName, LastName) VALUES ($1, $2) RETURNING AuthorID';
+        const values = [author.FirstName, author.LastName];
+        const result = await pool.query(query, values);
+        return result.rows[0].AuthorID;
+    } catch (error) {
+        console.error('Error detected when creating a new author:', error);
+        return null;
+    }
+}
+
+async function InsertOperations()
+{
+    const newAuthor: Author = {
+        FirstName: 'Rhonda',
+        LastName: 'bryne',
+    };
+    const createdAuthorId = await createAuthor(newAuthor);
+    console.log('Author added successfully:', createdAuthorId);
+}
+
+InsertOperations().catch(err => console.error('Error Detected:', err));
+*/
+
+/*async function deleteAuthor(id: number): Promise<boolean>
+{
+    try {
+        const query = 'DELETE FROM authors WHERE AuthorID = $1';
+        const result = await pool.query(query, [id]);
+        return result.rowCount > 0;
+       }
+catch (error)
+	{
+        console.error('Error detected when deleting author:', error);
+        return false;
+	}
+}async function DeleteOperations()
+{
+    const authorIdToDelete = 5; 
+    const isDeleted = await deleteAuthor(authorIdToDelete);
+    console.log('Author deleted successfully:', isDeleted);
+}
+
+
+DeleteOperations().catch(err => console.error('Error Detected:', err));*/
 
