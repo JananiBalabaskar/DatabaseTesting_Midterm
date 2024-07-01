@@ -631,7 +631,7 @@ interface Author
 }
 ```
 
-### Function to insert new author data
+### Function to create new author data
 ```
 async function createAuthor(author: Author): Promise<number | null>
 {
