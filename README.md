@@ -695,6 +695,34 @@ async function ReadOperations() {
 }
 ReadOperations().catch(err => console.error('Error in example:', err));
 ```
+### Function to update an author data
+```
+async function updateAuthor(authorId, newFirstName, newLastName) {
+    try {
+        const query = 'UPDATE authors SET FirstName = $1, LastName = $2 WHERE AuthorID = $3';
+        const values = [newFirstName, newLastName, authorId];
+        const result = await pool.query(query, values);
+        return result.rowCount > 0;
+    } catch (error) {
+        console.error('Error detected while updating author:', error);
+        return false;
+    }
+}
+```
+### Script to update an author data
+```
+const authorIdToUpdate = 1;
+const newFirstName = 'Victor';
+const newLastName = 'Hugo';
+
+updateAuthor(authorIdToUpdate, newFirstName, newLastName)
+    .then(updated => {
+        console.log('Author updated successfully:', updated);
+    })
+    .catch(err => {
+        console.error('Error updating author:', err);
+    });
+```
 
 ### Function to delete an author data
 ```
