@@ -686,6 +686,9 @@ async function getAllAuthors(): Promise<Author[]> {
         return [];
     }
 }
+```
+### Script to read an author data
+```
 async function ReadOperations() {
  const allAuthors = await getAllAuthors();
     console.log('All authors:', allAuthors);
