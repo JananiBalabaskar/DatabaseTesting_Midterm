@@ -16,7 +16,7 @@ interface Author
     FirstName: string;
     LastName: string;
 }
-
+Createauthor
 /* async function createAuthor(author: Author): Promise<number | null>
 {
     try {
@@ -43,6 +43,7 @@ async function InsertOperations()
 InsertOperations().catch(err => console.error('Error Detected:', err));
 */
 
+Deleteauthor
 /*async function deleteAuthor(id: number): Promise<boolean>
 {
     try {
@@ -64,4 +65,45 @@ catch (error)
 
 
 DeleteOperations().catch(err => console.error('Error Detected:', err));*/
+
+Read author
+/* async function getAllAuthors(): Promise<Author[]> {
+    try {
+        const query = 'SELECT * FROM authors';
+        const result = await pool.query(query);
+        return result.rows;
+    } catch (error) {
+        console.error('Error dtected while reading authors:', error);
+        return [];
+    }
+}
+async function ReadOperations() {
+ const allAuthors = await getAllAuthors();
+    console.log('All authors:', allAuthors);
+}
+ReadOperations().catch(err => console.error('Error in example:', err));*/
+
+Updateauthor
+/*async function updateAuthor(authorId, newFirstName, newLastName) {
+    try {
+        const query = 'UPDATE authors SET FirstName = $1, LastName = $2 WHERE AuthorID = $3';
+        const values = [newFirstName, newLastName, authorId];
+        const result = await pool.query(query, values);
+        return result.rowCount > 0;
+    } catch (error) {
+        console.error('Error detected while updating author:', error);
+        return false;
+    }
+}
+const authorIdToUpdate = 1;
+const newFirstName = 'Victor';
+const newLastName = 'Hugo';
+
+updateAuthor(authorIdToUpdate, newFirstName, newLastName)
+    .then(updated => {
+        console.log('Author updated successfully:', updated);
+    })
+    .catch(err => {
+        console.error('Error updating author:', err);
+    });*/
 
