@@ -1,8 +1,17 @@
+# PROG8071- DATABASE TESTING - MIDTERM ASSIGNMENT 
+
+### Team Members 
+
+Adithya Sivadasan – 8914576 
+
+Janani Bala Baskar – 8969827 
+
+Jaspher Jerith John Christopher – 8869805 
 
 # Online Bookstore Database  
  The online bookstore sells physical books, e-books, and audiobooks which need database management to support operations to  browse the catalog, make purchases, and leave reviews.
 
-## Duties of the individual members
+## 1. Duties of the individual members
 
 Janani – Identifying tables for an online bookstore and SQL queries for creating a sample database with the tables and attributes. 
 
@@ -12,7 +21,7 @@ Jaspher – SQL queries for five requirements.
 
 Adithya, Jaspher, Janani- Creating a Typescript interface that will allow modification to a table.
 
-## Identification of tables, attributes, and attribute types for Online Bookstore Database Design 
+## 2. Identification of tables, attributes, and attribute types for Online Bookstore Database Design 
 
 Authors: To save author details. 
 
@@ -188,7 +197,7 @@ Coupon: To store the coupon used while purchasing.
 | ExpiryDate      | DATE        |                 |
 | Function        | VARCHAR(50) |                 |
 
-## Steps to create database
+## Steps to create a database
 1. Open `virtual box` and Run `KALI`.
 2. open terminal.
 3. Give command `cd Downloads`.
@@ -302,8 +311,6 @@ CREATE TABLE Coupon (CouponID SERIAL PRIMARY KEY, ExpiryDate DATE, Function VARC
 ### To view a tables in the terminal
 ```
 \dt
-
-
 ```
 ### To Insert values into Authors table
  ```
@@ -446,7 +453,7 @@ INSERT INTO Coupon (ExpiryDate, Function) VALUES
 ('2024-10-31', 'DISCOUNT30');
 
 ```
-## SQL queries for DDL and DML operations in Books table
+## 3. SQL queries for DDL and DML operations in Books table
 ### DDL Query
 ```
 CREATE TABLE Books (BookID SERIAL PRIMARY KEY, Title VARCHAR(255), AuthorID INTEGER REFERENCES Authors(AuthorID),
@@ -456,8 +463,6 @@ CREATE TABLE Books (BookID SERIAL PRIMARY KEY, Title VARCHAR(255), AuthorID INTE
 ### DML Queries
 Insert a new book
 ```
-
-
 INSERT INTO Books (Title, AuthorID, PublisherID, PublishedDate, Edition, Language, Price, CopiesCount, TotalSold, ISBN, Format, FileURL)
 VALUES ('Harry Potter', 1, 1, '2000-10-17', 'First Edition', 'English', 20.54, 1000, 500, '123543789', 'Audio', 'https://www.hoopladigital.com/audiobook/harry-potter-and-the-sorcerers-stone-j-k-rowling/13280513');
 
@@ -480,8 +485,9 @@ Delete a book data
 DELETE FROM Books
 WHERE BookID = 4;
 ```
-## SQL Queries for the following requirements
-### To display authors who have published more than 2 books in the same genre within the last 2 years
+## 4. SQL Queries for the following requirements
+
+### Requirement 1: To display authors who have published more than 2 books in the same genre within the last 2 years
  ```
 SELECT 
     a.AuthorID, 
@@ -505,7 +511,8 @@ HAVING
     COUNT(b.BookID) > 2;
 
 ```
-### To display loyal customers who have spent more than X dollars in the last year
+
+### Requirement 2: To display loyal customers who have spent more than X dollars in the last year
  ```
 SELECT 
     c.CustomerID, 
@@ -524,7 +531,8 @@ HAVING
     SUM(p.TotalAmount) > 60;
 
 ```
-### To display books that have better user ratings than average
+
+### Requirement 3: To display books that have better user ratings than average
  ```
 SELECT 
     b.BookID, 
@@ -538,7 +546,8 @@ WHERE
     r.Rating > (SELECT AVG(Rating) FROM Reviews);
 
 ```
-### To display the most popular genre by sales
+
+### Requirement 4: To display the most popular genre by sales
  ```
 SELECT 
     g.GenreName,
@@ -557,7 +566,8 @@ LIMIT 1;
 
 
 ```
-### To display the 10 most recent reviews posted by customers
+
+### Requirement 5: To display the 10 most recent reviews posted by customers
  ```
 SELECT 
     r.ReviewID,
@@ -582,33 +592,38 @@ LIMIT 10;
 
  ```
 
-## Typescript Interface 
+## 5. Typescript Interface 
 
 ### To connect with database
 ```
 import { Pool, QueryResult } from 'pg';
 
 
-const pool = new Pool({
+const pool = new Pool(
+{
     user: 'postgres',
     host: 'localhost',
     database: 'online_bookstore',
     password: '12345678',
     port: 5432, 
-});
+}
+);
 ```
 
 ### Typescript Interface for author table
 ```
-interface Author {
+interface Author
+{
     AuthorID?: number; 
     FirstName: string;
     LastName: string;
 }
 ```
+
 ### Function to add new author
 ```
-async function createAuthor(author: Author): Promise<number | null> {
+async function createAuthor(author: Author): Promise<number | null>
+{
     try {
         const query = 'INSERT INTO authors (FirstName, LastName) VALUES ($1, $2) RETURNING AuthorID';
         const values = [author.FirstName, author.LastName];
@@ -620,12 +635,12 @@ async function createAuthor(author: Author): Promise<number | null> {
     }
 }
 
-exampleCRUDOperations().catch(err => console.error('Error in example:', err));
+InsertOperations().catch(err => console.error('Error Detected:', err));
 ```
 ### Data for adding new author
 ```
-async function exampleCRUDOperations() {
-   
+async function InsertOperations()
+{
     const newAuthor: Author = {
         FirstName: 'Rhonda',
         LastName: 'bryne',
@@ -633,45 +648,59 @@ async function exampleCRUDOperations() {
     const createdAuthorId = await createAuthor(newAuthor);
     console.log('New author created with ID:', createdAuthorId);
 }
-exampleCRUDOperations().catch(err => console.error('Error in example:', err));
+InsertOperations().catch(err => console.error('Error Detected:', err));
 ```
 ```
-async function exampleCRUDOperations() {
-   
-    const newAuthor: Author = {
+async function InsertOperations()
+{
+    const newAuthor: Author =
+	{
         FirstName: 'Charles',
         LastName: 'Dickens',
-    };
+	};
     const createdAuthorId = await createAuthor(newAuthor);
     console.log('New author created with ID:', createdAuthorId);
 }
+InsertOperations().catch(err => console.error('Error Detected:', err));
 ```
 
 ### Function to delete an author
 ```
-async function deleteAuthor(id: number): Promise<boolean> {
+async function deleteAuthor(id: number): Promise<boolean>
+{
     try {
         const query = 'DELETE FROM authors WHERE AuthorID = $1';
         const result = await pool.query(query, [id]);
         return result.rowCount > 0;
-    } catch (error) {
+       }
+catch (error)
+	{
         console.error('Error deleting author:', error);
         return false;
-    }
+	}
 }
-exampleCRUDOperations().catch(err => console.error('Error in example:', err));
+DeleteOperations().catch(err => console.error('Error Detected:', err));
 ```
 ### Data to delete an author
 ```
-async function exampleCRUDOperations() {
-
+async function DeleteOperations()
+{
     const authorIdToDelete = 5; 
     const isDeleted = await deleteAuthor(authorIdToDelete);
     console.log('Author deleted successfully:', isDeleted);
 }
-exampleCRUDOperations().catch(err => console.error('Error in example:', err));
+DeleteOperations().catch(err => console.error('Error Detected:', err));
 ```
 ## References
->Format used from [Markdown Live Preview](https://markdownlivepreview.com/).
->>Idea for Sample Bookstore Database [Database Star](https://www.databasestar.com/sample-bookstore-database/).
+> Format used from [Markdown Live Preview](https://markdownlivepreview.com/)
+>> Idea for Sample Bookstore Database [Database Star](https://www.databasestar.com/sample-bookstore-database/)
+>>> Tutorialspoint. (n.d.). PostgreSQL - Create Database. [TutorialsPoint] (https://www.tutorialspoint.com/postgresql/postgresql_create_database.htm)
+>>>> Interfaces [TypeScript Documentation] (https://www.typescriptlang.org/docs/handbook/interfaces.html)
+>>>>> A simple guide to setting up a project with Node.js, TypeScript, PostgreSQL, and TypeORM [Icegreeen on Medium] (https://icegreeen.medium.com/a-simple-guide-to-setting-up-a-project-with-node-js-typescript-postgres-and-typeorm-c5550bf1f4f0)
+>>>>>> Build a CRUD REST API with Node.js, Express, and PostgreSQL [LogRocket](https://blog.logrocket.com/crud-rest-api-node-js-express-postgresql/)
+>>>>>>> Node.js Express TypeScript PostgreSQL example: CRUD API [BezKoder] (https://www.bezkoder.com/typescript-orm-postgres/)
+>>>>>>>> A complete guide to TypeScript interfaces.[ Alex Devero] (https://blog.alexdevero.com/typescript-interfaces-guide/)
+>>>>>>>>> How to build a Node.js API with PostgreSQL and TypeScript[Best practices and tips Mateo Galic on Medium](https://medium.com/@mateogalic112/how-to-build-a-node-js-api-with-postgresql-and-typescript-best-practices-and-tips-84fee3d1c46c)
+>>>>>>>>> How to make connection to Postgres via Node.js [Stack Overflow](https://stackoverflow.com/questions/9205496/how-to-make-connection-to-postgres-via-node-js)
+>>>>>>>>> > How to run TypeScript files from command line [Stack Overflow](https://stackoverflow.com/questions/33535879/how-to-run-typescript-files-from-command-line)
 
